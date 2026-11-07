@@ -1,0 +1,52 @@
+/* スクロールバーを消し、ユーザー操作でのスクロールを止める（プログラムからのスクロールは可能） */
+/* bodyまでhiddenにするとXではページ自体が縮んで、プログラムからも動かせなくなる */
+html.op-active {
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  overscroll-behavior: none !important;
+}
+html.op-active::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* タイムライン内の「今見ている1件」以外は見えなくする */
+html.op-active [data-testid="primaryColumn"] [data-testid="cellInnerDiv"]:not([data-op-focus]) {
+  visibility: hidden !important;
+}
+
+/* 右サイドバー：Xの追従処理をやめ、画面の高さで単独スクロールさせる */
+html.op-active [data-op-sidebar] {
+  top: 0 !important;
+  bottom: auto !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  scrollbar-width: none !important;
+}
+html.op-active [data-op-sidebar]::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* 投稿フォーム：スクロールしても元の位置に残す */
+html.op-active [data-op-compose] {
+  position: sticky !important;
+  top: var(--op-compose-top, 53px) !important;
+  z-index: 2 !important;
+  background-color: var(--op-bg, #000) !important;
+  border-bottom: 1px solid var(--op-line, rgb(47, 51, 54)) !important;
+}
+
+/* 操作ヒント */
+#op-hud {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483647;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(15, 20, 25, 0.75);
+  color: #fff;
+  font: 12px/1.4 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
