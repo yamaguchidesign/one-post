@@ -1,15 +1,13 @@
 {
   "manifest_version": 3,
   "name": "One Post – Calm X Timeline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Show X (Twitter) one post at a time. Scrolling is disabled; use ↑↓ keys to move. Curb doomscrolling. / Xを1投稿ずつ表示、↑↓キーだけで移動。",
   "content_scripts": [
     {
       "matches": [
         "https://x.com/*",
-        "https://twitter.com/*",
-        "https://mobile.x.com/*",
-        "https://mobile.twitter.com/*"
+        "https://twitter.com/*"
       ],
       "js": [
         "content.js"

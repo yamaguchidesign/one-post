@@ -9,9 +9,15 @@ html.op-active::-webkit-scrollbar {
   display: none !important;
 }
 
-/* タイムライン内の「今見ている1件」以外は見えなくする */
-html.op-active [data-testid="primaryColumn"] [data-testid="cellInnerDiv"]:not([data-op-focus]) {
+/* タイムライン内の「今見ている1件」以外は見えなくする。
+   投稿が1件も無いとき（空・読み込み失敗）は op-empty で何も隠さない */
+html.op-active:not(.op-empty) [data-testid="primaryColumn"] [data-testid="cellInnerDiv"]:not([data-op-focus]) {
   visibility: hidden !important;
+}
+
+/* キー操作で投稿に移したフォーカスの枠線は出さない（スクリーンリーダーの位置合わせ用） */
+html.op-active [data-op-focus] article:focus {
+  outline: none !important;
 }
 
 /* 右サイドバー：Xの追従処理をやめ、画面の高さで単独スクロールさせる */
@@ -27,21 +33,29 @@ html.op-active [data-op-sidebar]::-webkit-scrollbar {
   display: none !important;
 }
 
-/* 投稿フォーム：スクロールしても元の位置に残す */
+/* 投稿フォーム：スクロールしても元の位置に残す。長くなっても画面に収め、中でスクロールできる */
 html.op-active [data-op-compose] {
   position: sticky !important;
   top: var(--op-compose-top, 53px) !important;
   z-index: 2 !important;
+  max-height: calc(100vh - var(--op-compose-top, 53px) - 8px) !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  scrollbar-width: none !important;
   background-color: var(--op-bg, #000) !important;
   border-bottom: 1px solid var(--op-line, rgb(47, 51, 54)) !important;
 }
+html.op-active [data-op-compose]::-webkit-scrollbar {
+  display: none !important;
+}
 
-/* 操作ヒント */
+/* 操作ヒント：右下のDMなどと重ならないよう、下中央の低い位置に */
 #op-hud {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 2147483647;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 10;
   padding: 6px 10px;
   border-radius: 6px;
   background: rgba(15, 20, 25, 0.75);
