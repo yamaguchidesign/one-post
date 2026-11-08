@@ -56,6 +56,10 @@
       /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) ||
       !!el.closest?.('[contenteditable="true"]'));
 
+  // 文字を入力している最中か（投稿フォームを含む、編集できる場所にフォーカスがある）
+  const editingNow = () =>
+    isTyping(document.activeElement) || !!document.querySelector("[data-op-compose]:focus-within");
+
   const inOverlay = (el) =>
     !!el?.closest?.('[role="dialog"], [role="menu"], [role="listbox"], [data-testid="Dropdown"], [data-testid="HoverCard"]');
 
@@ -275,7 +279,7 @@
     "keydown",
     (e) => {
       if (!active || e.isComposing) return;
-      if (isTyping(e.target) || inOverlay(e.target) || document.querySelector('[role="dialog"][aria-modal="true"]')) return;
+      if (editingNow() || isTyping(e.target) || inOverlay(e.target) || document.querySelector('[role="dialog"][aria-modal="true"]')) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -379,6 +383,8 @@
     pending = false;
     applyActive();
     if (!active) return;
+    // 入力中は何も動かさない（カーソル位置・フォーカス・スクロールに触れない）。終わったら追従を再開する
+    if (editingNow()) return;
     setupSidebar();
     setupCompose();
 
