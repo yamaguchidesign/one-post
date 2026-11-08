@@ -62,6 +62,6 @@ X(Twitter)のタイムラインを1投稿ずつ表示し、スクロールを抑
 1. https://chrome.google.com/webstore/devconsole にログイン（初回のみ登録料 $5）
 2. 「新しいアイテム」→ `dist/one-post.zip` をアップロード
 3. 上の文章・カテゴリ・プライバシーポリシーURLを入力
-4. アイコン: `store/icon-512.png`（128pxは zip 内の icons/icon128.png）
+4. ショップアイコン: `store/shop-icon-128.png`（128x128・透明の余白つき）。zip 内の拡張アイコンは icons/ にある
 5. スクリーンショット: `store/screenshot-1.png` と `store/screenshot-2.png`（1280x800・架空の投稿。実画面を撮り直したいときは個人の投稿が写らないように）
 6. 審査に提出（通常数日）
