@@ -25,9 +25,20 @@
   };
 
   // ---- どのページで効かせるか ------------------------------------------
-  // 効かせるのはホームのタイムラインだけ。
-  // プロフィール・通知・ブックマーク・いいね・投稿の詳細などは、ふつうに全部表示してスクロールできる。
+  // 効かせるのはホームのタイムラインと、検索結果の投稿一覧（話題・最新タブ）。
+  // 検索の「アカウント・メディア・リスト」タブ、プロフィール・通知・ブックマーク・いいね・投稿の詳細などは、
+  // ふつうに全部表示してスクロールできる。
   const normPath = () => location.pathname.replace(/\/+$/, "") || "/";
+  const isPostSearch = () => {
+    const f = new URLSearchParams(location.search).get("f");
+    return !f || f === "top" || f === "live";
+  };
+  const isTargetPage = (p) => p === "/home" || (p === "/search" && isPostSearch());
+  // ページの区別。検索はタブや検索語が変わるとURLのクエリだけが変わるので、それも含める
+  const pageKey = () => {
+    const p = normPath();
+    return p === "/search" ? p + location.search : p;
+  };
   // 投稿画面・画像ビューアなどはURLが変わるが、背景はホームのまま。機能の状態を保つ。
   const isModalPath = (p) =>
     /^\/compose\//.test(p) || /\/(photo|video)\/\d+$/.test(p) || /^\/i\/flow\//.test(p);
@@ -35,8 +46,8 @@
   let active = false;
   const applyActive = () => {
     const p = normPath();
-    if (active && isModalPath(p)) return; // ホームの上に重なったモーダル：状態を保つ
-    const on = p === "/home";
+    if (active && isModalPath(p)) return; // ホーム・検索の上に重なったモーダル：状態を保つ
+    const on = isTargetPage(p);
     if (on === active) return;
     active = on;
     root.classList.toggle("op-active", on);
@@ -116,14 +127,14 @@
   const anchorY = () => {
     const b = composeBox();
     if (b) return Math.round(b.getBoundingClientRect().bottom);
-    return anchors.get(normPath()) ?? headerBottom();
+    return anchors.get(pageKey()) ?? headerBottom();
   };
 
   // ページ最上部にいる間は、一番上の投稿の位置を基準として記録し続ける
   const recordAnchor = (list) => {
     if (window.scrollY !== 0 || !list.length) return;
     const top = list[0].getBoundingClientRect().top;
-    if (top > 0 && top < window.innerHeight * 0.8) anchors.set(normPath(), Math.round(top));
+    if (top > 0 && top < window.innerHeight * 0.8) anchors.set(pageKey(), Math.round(top));
   };
 
   // 画面上で基準位置に一番近い投稿（今の投稿が消えたときの拾い直し用）
@@ -372,7 +383,7 @@
 
   // ---- X側の再描画（仮想リスト・ページ遷移）に追従 --------------------
   let pending = false;
-  let lastPath = normPath();
+  let lastPage = pageKey();
   let lastComposeH = null;
   const resizeObs = new ResizeObserver(() => schedule());
   const schedule = () => {
@@ -388,9 +399,9 @@
     setupSidebar();
     setupCompose();
 
-    const p = normPath();
-    if (p !== lastPath && !isModalPath(p)) {
-      lastPath = p;
+    const pk = pageKey();
+    if (pk !== lastPage && !isModalPath(normPath())) {
+      lastPage = pk;
       current = null;
       headerCache = null;
     }
