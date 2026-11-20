@@ -4,15 +4,15 @@
 One Post – Calm X Timeline
 
 ## 概要（132文字以内）※manifestのdescriptionと同じ
-Show X (Twitter) one post at a time. Scrolling is disabled; use ↑↓ keys to move. Curb doomscrolling. / Xを1投稿ずつ表示、↑↓キーだけで移動。
+Show X (Twitter) one post at a time. Scrolling is disabled; use ↑↓ keys to move. Curb doomscrolling. / Xを1投稿ずつ表示、↑↓←→キーだけで移動。
 
 ## 詳細な説明（日本語）
 X（旧Twitter）のホームと検索結果を1投稿ずつ表示する拡張機能です。
 
-スクロールは無効になり、↑↓キーでだけ次の投稿へ進めます。スクロールで次々に新しい刺激が出てくると、ついだらだら見続けてしまう。それを防ぐための小さな道具です。
+スクロールは無効になり、↑↓←→キーでだけ次の投稿へ進めます。スクロールで次々に新しい刺激が出てくると、ついだらだら見続けてしまう。それを防ぐための小さな道具です。
 
 【できること】
-・ホームのタイムラインと検索結果の投稿（話題・最新タブ）を1件だけ表示。↑↓キーで前後の投稿へ切り替え
+・ホームのタイムラインと検索結果の投稿（話題・最新タブ）を1件だけ表示。↑↓←→キーで前後の投稿へ切り替え
 ・ホイール／トラックパッド／スペース／PageUp・PageDown／j・k でのスクロールを無効化
 ・画面に収まらない長い投稿は、その投稿の中だけスクロール可能
 ・投稿フォームは上に固定、右のサイドバーは単独でスクロール可能
@@ -28,7 +28,7 @@ X Corp. とは無関係の非公式ツールです。Xの画面構造に依存�
 ## Detailed description (English)
 Shows your X (Twitter) home timeline and search results one post at a time.
 
-Scrolling is disabled; you move to the next post only with the ↑ / ↓ keys. A small tool to break the doomscrolling habit.
+Scrolling is disabled; you move to the next post only with the ↑ ↓ ← → keys. A small tool to break the doomscrolling habit.
 
 Features:
 - One post on screen at a time on Home and in search results (Top / Latest tabs); ↑ / ↓ switch posts

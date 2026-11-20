@@ -293,7 +293,7 @@
       if (editingNow() || isTyping(e.target) || inOverlay(e.target) || document.querySelector('[role="dialog"][aria-modal="true"]')) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowRight" || e.key === "ArrowLeft") {
         // 動画の音量・シークバーなど、矢印キーで操作する部品の上では奪わない
         if (e.target.closest?.('video, audio, [role="slider"]')) return;
         e.preventDefault();
@@ -304,7 +304,7 @@
           repeatLock = true;
           setTimeout(() => (repeatLock = false), 250);
         }
-        move(e.key === "ArrowDown" ? 1 : -1);
+        move(e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1);
         return;
       }
       if (SCROLL_KEYS.has(e.key)) {
