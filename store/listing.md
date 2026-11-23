@@ -58,10 +58,14 @@ https://github.com/yamaguchidesign/one-post/blob/main/PRIVACY.md
 ## 単一目的の説明
 X(Twitter)のタイムラインを1投稿ずつ表示し、スクロールを抑制して見すぎを防ぐこと。
 
-## 提出手順（人間がやる）
-1. https://chrome.google.com/webstore/devconsole にログイン（初回のみ登録料 $5）
-2. 「新しいアイテム」→ `dist/one-post.zip` をアップロード
-3. 上の文章・カテゴリ・プライバシーポリシーURLを入力
-4. ショップアイコン: `store/shop-icon-128.png`（128x128・透明の余白つき）。zip 内の拡張アイコンは icons/ にある
-5. スクリーンショット: `store/screenshot-1.png` と `store/screenshot-2.png`（1280x800・架空の投稿。実画面を撮り直したいときは個人の投稿が写らないように）
-6. 審査に提出（通常数日）
+## 提出手順（Claudeがやる）
+新しい版を作るたびに、Claude が GitHub リリースのあとで Chrome ウェブストアにも提出する（山口さん指定 2026-11-23）。
+
+1. `manifest.json` の version をストアに出ている版より上げ、`dist/one-post.zip` を作り直す
+2. `node ~/Developer/yamaguchidesign/cws-publish/cws.js status .` で今のストアの版を確認する
+3. `node ~/Developer/yamaguchidesign/cws-publish/cws.js publish .` でアップロードして審査に提出する（`.cws.json` に itemId 設定済み）
+4. 審査の状態は review-watch-board が見張り、変わると Mac に通知が来る
+
+掲載文・カテゴリ・プライバシーポリシーURL・アイコン・スクリーンショットの変更は、ストアのダッシュボード側（https://chrome.google.com/webstore/devconsole ）での作業になる。ここは API では変えられないので、変えたいときだけ山口さんに頼む。
+- ショップアイコン: `store/shop-icon-128.png`（128x128・透明の余白つき）
+- スクリーンショット: `store/screenshot-1.png` と `store/screenshot-2.png`（1280x800・架空の投稿。実画面を撮り直すときは個人の投稿が写らないように）
