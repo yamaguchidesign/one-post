@@ -195,7 +195,7 @@
     if (!hud) {
       hud = document.createElement("div");
       hud.id = "op-hud";
-      hud.textContent = "↑ ↓ で次の投稿へ";
+      hud.textContent = "↑ ↓ ← → で投稿を移動";
       (document.body || root).appendChild(hud);
     }
     hud.style.display = active && current ? "" : "none";
